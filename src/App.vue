@@ -10,8 +10,6 @@ import HeaderComp from './components/HeaderComp.vue'
 import MainComp from './components/MainComp.vue'
 import axios from "axios";
 
-
-
 export default {
   name: 'App',
   components: {
@@ -26,7 +24,7 @@ export default {
   },
   created(){
     axios.request("https://flynn.boolean.careers/exercises/api/array/music").then((req)=>{
-      this.results = req.data.response;
+      setTimeout(()=> this.results = req.data.response,2000);
   }).then(()=>{
     this.results.forEach((result)=>{
       if(!this.categories.includes(result.genre)) this.categories.push(result.genre);
