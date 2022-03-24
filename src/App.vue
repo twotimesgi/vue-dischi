@@ -23,13 +23,15 @@ export default {
     }
   },
   created(){
+    setTimeout(()=>{ //Forzo un ritardo nel caricamento dei dati
     axios.request("https://flynn.boolean.careers/exercises/api/array/music").then((req)=>{
-      setTimeout(()=> this.results = req.data.response,2000);
+      this.results = req.data.response;
   }).then(()=>{
     this.results.forEach((result)=>{
       if(!this.categories.includes(result.genre)) this.categories.push(result.genre);
     })
   });
+  }, 2000);
   }
 }
 </script>
