@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <header-comp></header-comp>
+    <header-comp :categories="categories"></header-comp>
     <main-comp :results="results"></main-comp>
   </div>
 </template>
@@ -20,13 +20,18 @@ export default {
   },
   data(){
     return {
-      results: []
+      results: [],
+      categories: []
     }
   },
   created(){
     axios.request("https://flynn.boolean.careers/exercises/api/array/music").then((req)=>{
       this.results = req.data.response;
-  })
+  }).then(()=>{
+    this.results.forEach((result)=>{
+      if(!this.categories.includes(result.genre)) this.categories.push(result.genre);
+    })
+  });
   }
 }
 </script>

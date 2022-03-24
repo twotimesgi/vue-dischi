@@ -3,6 +3,7 @@
   <img class="logo" src='../assets/logo.png' alt="logo">
   <select class="category-selector">
     <option value="All">All</option>
+    <option v-for="category in categories" :value="category" :key="category">{{ category }}</option>
   </select>
 </header>
 </template>
@@ -10,6 +11,9 @@
 <script>
 export default {
   name: 'HeaderComp',
+  props:{
+    categories: []
+  }
 }
 </script>
 
