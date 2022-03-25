@@ -1,8 +1,8 @@
 <template>
 <header>
   <img class="logo" src='../assets/logo.png' alt="logo">
-  <select v-model="currentCategory" @change="$emit('catselect', currentCategory)">
-    <option value="All">All</option>
+  <select class="category-selector" v-model="currentCategory" @change="$emit('catselect', currentCategory)">
+    <option value="All">Pick a genre</option>
     <option v-for="category in categories" :value="category" :key="category">{{ category }}</option>
   </select>
 </header>
@@ -35,7 +35,8 @@ header{
   }
 
   .category-selector{
-    min-width: 100px;
+    width: 300px;
+    font-size: 1.1rem;
   }
 }
 </style>
