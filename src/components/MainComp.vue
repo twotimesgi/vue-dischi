@@ -1,7 +1,10 @@
 <template>
 <main>
-  <div v-if="results.length > 0" class="container">
+  <div v-if="results.length > 0 && loaded" class="container">
     <card-comp  v-for="result in results" :key="result.title" :result="result"></card-comp>
+  </div>
+  <div v-else-if="results.length == 0 && loaded" class="container">
+    <div class="text-center">No results found.</div>
   </div>
   <div v-else class="container">
       <loader-comp></loader-comp>
@@ -20,7 +23,8 @@ export default {
     LoaderComp
   },
   props: {
-    results: []
+    results: Array,
+    loaded: Boolean
   },
 }
 </script>
@@ -34,5 +38,9 @@ export default {
     flex-wrap: wrap;
     gap: 20px;
     justify-content: center;
+  }
+
+  .text-center{
+    text-align: center;
   }
 </style>

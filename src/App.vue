@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <header-comp
-      @catselect="filterByCategory"
-      :categories="categories"
+      @autselect="filterByAuthor" @catselect="filterByCategory"
+      :categories="categories" :authors="authors"
     ></header-comp>
-    <main-comp :results="filteredResults"></main-comp>
+    <main-comp :results="filtered" :loaded="dataLoaded"></main-comp>
   </div>
 </template>
 
@@ -21,9 +21,14 @@ export default {
   },
   data() {
     return {
-      filteredResults: [],
       results: [],
       categories: [],
+      authors: [],
+      dataLoaded: false,
+      filters: {
+        category: "All",  
+        author: "All"
+      }
     };
   },
   created() {
@@ -33,23 +38,33 @@ export default {
         .request("https://flynn.boolean.careers/exercises/api/array/music")
         .then((req) => {
           this.results = req.data.response;
+          this.dataLoaded = true;
         })
         .then(() => {
           this.results.forEach((result) => {
             if (!this.categories.includes(result.genre))
               this.categories.push(result.genre);
           });
+          this.results.forEach((result) => {
+            if (!this.authors.includes(result.author))
+              this.authors.push(result.author);
+          });
         })
-        .then(() => {
-          this.filteredResults = this.results;
-        });
     }, 2000);
   },
   methods: {
     filterByCategory(cat) {
-      this.filteredResults = this.results.filter((res) => res.genre == cat || cat == "All");
+      this.filters.category = cat;
+    },
+    filterByAuthor(aut) {
+      this.filters.author = aut;
     },
   },
+  computed:{
+    filtered(){
+      return this.results.filter((res) => (res.genre == this.filters.category || this.filters.category == "All")&&(res.author == this.filters.author || this.filters.author == "All"));
+    }
+  }
 };
 </script>
 
