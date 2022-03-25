@@ -1,7 +1,7 @@
 <template>
 <header>
   <img class="logo" src='../assets/logo.png' alt="logo">
-  <select class="category-selector">
+  <select v-model="currentCategory" @change="$emit('catselect', currentCategory)">
     <option value="All">All</option>
     <option v-for="category in categories" :value="category" :key="category">{{ category }}</option>
   </select>
@@ -12,7 +12,12 @@
 export default {
   name: 'HeaderComp',
   props:{
-    categories: []
+    categories: [],
+  },
+  data(){
+    return{
+        currentCategory: "All",
+    }
   }
 }
 </script>
